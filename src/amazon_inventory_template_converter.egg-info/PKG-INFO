@@ -1,4 +1,17 @@
-# Amazon Seller Central Inventory Template Converter (Template sheet only)
+Metadata-Version: 2.4
+Name: amazon-inventory-template-converter
+Version: 0.2.0
+Summary: Convert Amazon Inventory Excel templates (RING Template sheet) into Mongo-friendly JSON
+Author: Ridley Tools
+License: MIT
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pandas>=2.2.0
+Requires-Dist: openpyxl>=3.1.2
+Dynamic: license-file
+
+# Amazon Inventory Template Converter (Template sheet only)
 
 This version is tailored to your updated file format and **only processes the sheet named `Template`**.
 It converts the sheet into **MongoDB-friendly JSON** with a single parent product document that contains its **variants** and an **optionSchema**.
@@ -12,12 +25,11 @@ pip install -e .
 ## Usage
 
 ```bash
-aitc examples/RING-template-base.xlsm -o out.json --pretty
+aitc convert /path/to/RING-template-base.xlsm -o out.json --pretty
 # (sheet is pinned to 'Template' by default)
 ```
 
 ### Notes
-
 - Detects canonical header row at **row 2** and reads data from **row 3** onward.
 - Parent/Child: checks `parent_sku` for `"Parent"`/`"Child"` and for children uses `variation_theme` as the parent key.
 - Variants' **ring_size** is read from `ring_size`/`size_name`, or inferred from SKU suffix (`-40` → `4.0`, `-45` → `4.5`, etc.).
@@ -25,17 +37,19 @@ aitc examples/RING-template-base.xlsm -o out.json --pretty
 - Images: `main_image_url`, `other_image_url1..N`, plus `swatch_image_url`.
 - Fields with blank values are ignored.
 
+
 ## MongoDB Compass Import
 
 You can import the converted JSON directly into MongoDB Compass:
 
 1. Open Compass and connect to your server.
-2. Select database **`databasename`** → collection **`rings`** (create if missing).
+2. Select database **`ridleycustomjewelry`** → collection **`rings`** (create if missing).
 3. Click **Add Data → Import File**.
 4. Choose **`examples/rings.insert.json`** and set **File Type = JSON** (Array).
 5. Import.
 
 > Alternatively, use newline-delimited JSON: `examples/rings.ndjson` (File Type = JSON — NDJSON).
+
 
 ## Docker
 
@@ -51,7 +65,6 @@ docker run --rm -it -v "$PWD":/work -w /work aitc:latest convert RING-template-b
 ```
 
 Using the included examples folder:
-
 ```bash
 make docker-build
 make docker-run   # starts container and shows help
