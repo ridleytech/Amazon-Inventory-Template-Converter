@@ -1,0 +1,12 @@
+LICENSE
+README.md
+pyproject.toml
+src/aitc/__init__.py
+src/aitc/cli.py
+src/aitc/converter.py
+src/amazon_inventory_template_converter.egg-info/PKG-INFO
+src/amazon_inventory_template_converter.egg-info/SOURCES.txt
+src/amazon_inventory_template_converter.egg-info/dependency_links.txt
+src/amazon_inventory_template_converter.egg-info/entry_points.txt
+src/amazon_inventory_template_converter.egg-info/requires.txt
+src/amazon_inventory_template_converter.egg-info/top_level.txt

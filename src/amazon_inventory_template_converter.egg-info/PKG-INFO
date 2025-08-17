@@ -1,4 +1,17 @@
-# Amazon Seller Central Inventory Template Converter (Template sheet only)
+Metadata-Version: 2.4
+Name: amazon-inventory-template-converter
+Version: 0.2.0
+Summary: Convert Amazon Inventory Excel templates (RING Template sheet) into Mongo-friendly JSON
+Author: Randall Ridley
+License: MIT
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pandas>=2.2.0
+Requires-Dist: openpyxl>=3.1.2
+Dynamic: license-file
+
+# Amazon Inventory Template Converter (Template sheet only)
 
 This version is tailored to your updated file format and **only processes the sheet named `Template`**.
 It converts the sheet into **MongoDB-friendly JSON** with a single parent product document that contains its **variants** and an **optionSchema**.
@@ -12,7 +25,7 @@ pip install -e .
 ## Usage
 
 ```bash
-aitc examples/RING-template-base.xlsm -o out.json --pretty
+aitc convert /path/to/RING-template-base.xlsm -o out.json --pretty
 # (sheet is pinned to 'Template' by default)
 ```
 
@@ -30,7 +43,7 @@ aitc examples/RING-template-base.xlsm -o out.json --pretty
 You can import the converted JSON directly into MongoDB Compass:
 
 1. Open Compass and connect to your server.
-2. Select database **`databasename`** → collection **`rings`** (create if missing).
+2. Select database **`ridleycustomjewelry`** → collection **`rings`** (create if missing).
 3. Click **Add Data → Import File**.
 4. Choose **`examples/rings.insert.json`** and set **File Type = JSON** (Array).
 5. Import.
