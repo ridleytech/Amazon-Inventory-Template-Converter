@@ -179,17 +179,17 @@ def convert(path: str) -> List[Dict[str, Any]]:
     children_by_parent = {}
 
     for _, r in df.iterrows():
-        parent_sku_value = str(r.get("parent_sku", "")).strip().lower()
+        parent_value = str(r.get("parent_child", "")).strip().lower()
         sku = str(r.get("item_sku", "")).strip()
         if not sku:
             continue
 
-        if parent_sku_value == "parent":
+        if parent_value == "parent":
             parents[sku] = r
             children_by_parent.setdefault(sku, [])
-        elif parent_sku_value == "child":
+        elif parent_value == "child":
             # in this file, the actual parent key is stored in 'variation_theme'
-            parent_key = str(r.get("variation_theme", "")).strip() or None
+            parent_key = str(r.get("parent_sku", "")).strip() or None
             if not parent_key:
                 # fallback: group by base SKU without -NN suffix
                 m = re.match(r"(.+)-[0-9]{2,3}$", sku)
